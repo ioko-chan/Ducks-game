@@ -30,10 +30,10 @@ namespace Gameplay
         
         public void Move()
         {
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
                 _characterControllers.Move(CharacterControllers.Direction.Left);
-            }else if(Input.GetKey(KeyCode.D))
+            }else if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
                 _characterControllers.Move(CharacterControllers.Direction.Right);
             }

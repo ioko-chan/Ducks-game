@@ -9,7 +9,6 @@ namespace Gameplay
         [SerializeField]
         private float _speed = 1;
 
-        [SerializeField]
         private CharacterController _characterController;
         public enum CharacterState
         {
@@ -25,6 +24,11 @@ namespace Gameplay
             Right
         }
         public Direction CurrentDirection;
+
+        private void Start()
+        {
+            _characterController = GetComponent<CharacterController>();
+        }
 
         public void Move(Direction direction)
         {
