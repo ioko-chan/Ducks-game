@@ -13,9 +13,13 @@ namespace Gameplay
         [SerializeField]
         private CharacterControllers _characterControllers;
 
+        [SerializeField]
+        private EventDispatcher _eventPressControllButton;
+
         private void OnEnable()
         {
             _updateEventListener.OnEventHappened += UpdateBehaviour;
+           
         }
 
         private void OnDisable()
@@ -33,9 +37,12 @@ namespace Gameplay
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
                 _characterControllers.Move(CharacterControllers.Direction.Left);
-            }else if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+                _eventPressControllButton.Dispatch();
+            }
+            else if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
                 _characterControllers.Move(CharacterControllers.Direction.Right);
+                _eventPressControllButton.Dispatch();
             }
             else
             {

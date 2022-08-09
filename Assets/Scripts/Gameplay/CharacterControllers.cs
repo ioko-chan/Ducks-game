@@ -1,14 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Events;
 
 namespace Gameplay
 {
     public class CharacterControllers : MonoBehaviour
     {
-        [SerializeField]
-        private float _speed = 1;
-
         private CharacterController _characterController;
         public enum CharacterState
         {
@@ -23,6 +21,7 @@ namespace Gameplay
             Left ,
             Right
         }
+
         public Direction CurrentDirection;
 
         private void Start()
@@ -30,30 +29,39 @@ namespace Gameplay
             _characterController = GetComponent<CharacterController>();
         }
 
+        [SerializeField]
+        private CharacterData _characterData;
+
         public void Move(Direction direction)
         {
             CurrentDirection = direction;
+            _characterData.ChangeDirection(direction);
+
             CurrentState = CharacterState.Move;
-            Vector2 moveVector = Vector2.zero;
+            _characterData.ChangeState(CharacterState.Move);
+
+            _characterData.ChangePosition(transform.position);
+            Vector3 moveVector = Vector3.zero;
             switch (direction)
             {
                 case Direction.Left:
                     {
-                        moveVector.x = -_speed;
+                        moveVector.x = -1;
                         break;
                     }
                 case Direction.Right:
                     {
-                        moveVector.x = _speed;
+                        moveVector.x = 1;
                         break;
                     }
             }
-            _characterController.Move(moveVector*Time.deltaTime);
+            _characterController.Move(moveVector*Time.deltaTime* _characterData.Speed);
         }
 
         public void Stand()
         {
             CurrentState = CharacterState.Stand;
+            _characterData.ChangeState(CharacterState.Stand);
         }
     }
 }

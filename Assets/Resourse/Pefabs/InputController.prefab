@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1588668602598919569}
   - component: {fileID: 1588668602598919568}
-  - component: {fileID: 1588668602598919571}
+  - component: {fileID: 2868953230718453822}
+  - component: {fileID: 7497026044683216085}
   m_Layer: 0
   m_Name: InputController
   m_TagString: Untagged
@@ -45,9 +46,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9235f62124f16da4d918c0650e38375f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _updateEventListener: {fileID: 1588668602598919571}
+  _updateEventListener: {fileID: 0}
   _characterControllers: {fileID: 0}
---- !u!114 &1588668602598919571
+  _eventPressControllButton: {fileID: 0}
+--- !u!114 &2868953230718453822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588668602598919570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e69ea7dc689af7148aa891c6ab54bc8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _someEvent: {fileID: 11400000, guid: f9528b12e2aff2e40865d619d0589914, type: 2}
+--- !u!114 &7497026044683216085
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

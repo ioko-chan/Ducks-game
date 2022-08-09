@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Events;
 using System;
+using Gameplay;
+using static Gameplay.CharacterControllers;
 
 namespace Manager
 {
@@ -12,7 +14,10 @@ namespace Manager
         private Camera _camera;
 
         [SerializeField]
-        private EventListener _updatePositionListener;
+        private EventListener _eventPressControllButton;
+
+        [SerializeField]
+        private CharacterData _characterData;
 
         [SerializeField]
         private GameObject _leftBorder;
@@ -21,38 +26,83 @@ namespace Manager
         private GameObject _rightBorder;
 
         [SerializeField]
-        private CharacterController _duck;
-
+        private CharacterController _cameraController;
 
         private void OnEnable()
         {
-            _updatePositionListener.OnEventHappened += UpdatePosition;
+            _eventPressControllButton.OnEventHappened += UpdatePosition;
         }
 
         private void OnDisable()
         {
-            _updatePositionListener.OnEventHappened -= UpdatePosition;
+            _eventPressControllButton.OnEventHappened -= UpdatePosition;
         }
 
         private void UpdatePosition()
         {
             if (!isBorder())
             {
-                _camera.transform.position = new Vector3(_duck.transform.position.x, _camera.transform.position.y, _camera.transform.position.z);
+                MoveCamera();
             }
-            else
+            else if(isBorderLeft() && (Math.Abs(_characterData.Position.x - _leftBorder.transform.position.x) > 12) && (_characterData.Direction == CharacterControllers.Direction.Right))
             {
-                
+                MoveCamera();
+            }
+            else if (isBorderRight() && ((Math.Abs(_characterData.Position.x - _rightBorder.transform.position.x) > 12)) && (_characterData.Direction == CharacterControllers.Direction.Left))
+            {
+                MoveCamera();
             }
         }
 
         private bool isBorder()
         {
-            if(_camera.transform.position.x >= _leftBorder.transform.position.x && _camera.transform.position.x <= _rightBorder.transform.position.x)
+            if(isBorderRight() )
+            {
+                return true;
+            }
+            else if( isBorderLeft())
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool isBorderRight()
+        {
+            if(_camera.transform.position.x + 10 < _rightBorder.transform.position.x)
             {
                 return false;
             }
             return true;
+        }
+
+        private bool isBorderLeft()
+        {
+            if (_camera.transform.position.x - 12 > _leftBorder.transform.position.x )
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void MoveCamera()
+        {
+            float moveVectorCamera = 0;
+
+            switch (_characterData.Direction)
+            {
+                case Direction.Left:
+                    {
+                        moveVectorCamera= -_characterData.Speed;
+                        break;
+                    }
+                case Direction.Right:
+                    {
+                        moveVectorCamera= _characterData.Speed;
+                        break;
+                    }
+            }
+            _cameraController.Move(new Vector3(moveVectorCamera * Time.deltaTime,0,0));
         }
     }
 }
