@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Events;
+using System;
 
 namespace Gameplay
 {
@@ -32,6 +33,12 @@ namespace Gameplay
         [SerializeField]
         private CharacterData _characterData;
 
+        [SerializeField]
+        private Transform _leftBorder;
+
+        [SerializeField]
+        private Transform _rightBorder;
+
         public void Move(Direction direction)
         {
             CurrentDirection = direction;
@@ -55,7 +62,25 @@ namespace Gameplay
                         break;
                     }
             }
-            _characterController.Move(moveVector*Time.deltaTime* _characterData.Speed);
+
+            {
+                _characterController.Move(moveVector * Time.deltaTime * _characterData.Speed);
+            }
+        }
+
+        private bool isBorder()
+        {
+            return true;
+        }
+
+        private bool isBorderRight()
+        {
+            return true;
+        }
+
+        private bool isBorderLeft()
+        {
+            return true;
         }
 
         public void Stand()

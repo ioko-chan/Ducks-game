@@ -44,12 +44,14 @@ namespace Manager
             {
                 MoveCamera();
             }
-            else if(isBorderLeft() && (Math.Abs(_characterData.Position.x - _leftBorder.transform.position.x) > 12) && (_characterData.Direction == CharacterControllers.Direction.Right))
+            else if(isBorderRight() && (( _rightBorder.transform.position.x - _characterData.Position.x) > 10) && (_characterData.Direction == CharacterControllers.Direction.Left))
             {
+                //Debug.Log(_rightBorder.transform.position.x - _characterData.Position.x + " right");
                 MoveCamera();
             }
-            else if (isBorderRight() && ((Math.Abs(_characterData.Position.x - _rightBorder.transform.position.x) > 12)) && (_characterData.Direction == CharacterControllers.Direction.Left))
+            else if (isBorderLeft() && (((_characterData.Position.x - _leftBorder.transform.position.x) > 10)) && (_characterData.Direction == CharacterControllers.Direction.Right))
             {
+                //Debug.Log(_characterData.Position.x - _leftBorder.transform.position.x + " left");
                 MoveCamera();
             }
         }
@@ -78,7 +80,7 @@ namespace Manager
 
         private bool isBorderLeft()
         {
-            if (_camera.transform.position.x - 12 > _leftBorder.transform.position.x )
+            if (_camera.transform.position.x - 10 > _leftBorder.transform.position.x )
             {
                 return false;
             }
@@ -87,22 +89,23 @@ namespace Manager
 
         private void MoveCamera()
         {
+            //Debug.Log("Move");
             float moveVectorCamera = 0;
 
             switch (_characterData.Direction)
             {
                 case Direction.Left:
                     {
-                        moveVectorCamera= -_characterData.Speed;
+                        moveVectorCamera= -1;
                         break;
                     }
                 case Direction.Right:
                     {
-                        moveVectorCamera= _characterData.Speed;
+                        moveVectorCamera= 1;
                         break;
                     }
             }
-            _cameraController.Move(new Vector3(moveVectorCamera * Time.deltaTime,0,0));
+            _cameraController.Move(new Vector3(moveVectorCamera * Time.deltaTime,0,0) * _characterData.Speed);
         }
     }
 }
