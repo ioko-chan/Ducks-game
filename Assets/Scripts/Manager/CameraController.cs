@@ -58,11 +58,7 @@ namespace Manager
 
         private bool isBorder()
         {
-            if(isBorderRight() )
-            {
-                return true;
-            }
-            else if( isBorderLeft())
+            if(isBorderRight() || isBorderLeft())
             {
                 return true;
             }

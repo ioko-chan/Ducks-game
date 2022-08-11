@@ -36,13 +36,13 @@ namespace Gameplay
         {
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
-                _characterControllers.Move(CharacterControllers.Direction.Left);
                 _eventPressControllButton.Dispatch();
+                _characterControllers.Move(CharacterControllers.Direction.Left);
             }
             else if(Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
-                _characterControllers.Move(CharacterControllers.Direction.Right);
                 _eventPressControllButton.Dispatch();
+                _characterControllers.Move(CharacterControllers.Direction.Right);
             }
             else
             {

@@ -48,8 +48,26 @@ namespace Gameplay
             _characterData.ChangeState(CharacterState.Move);
 
             _characterData.ChangePosition(transform.position);
+           
+
+            if(isBorderRight() && CurrentDirection == Direction.Left)   
+            {
+                Move();
+            }
+            else if (isBorderLeft() && CurrentDirection == Direction.Right)
+            {
+                Move();
+            }
+            else if (!isBorder())
+            {
+                Move();
+            }
+        }
+
+        private void Move()
+        {
             Vector3 moveVector = Vector3.zero;
-            switch (direction)
+            switch (CurrentDirection)
             {
                 case Direction.Left:
                     {
@@ -63,23 +81,33 @@ namespace Gameplay
                     }
             }
 
-            {
-                _characterController.Move(moveVector * Time.deltaTime * _characterData.Speed);
-            }
+            _characterController.Move(moveVector * Time.deltaTime * _characterData.Speed);
         }
 
         private bool isBorder()
         {
-            return true;
+            if (isBorderRight() || isBorderLeft())
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool isBorderRight()
         {
+            if (transform.position.x+1 < _rightBorder.position.x)
+            {
+                return false;
+            }
             return true;
         }
 
         private bool isBorderLeft()
         {
+            if (transform.position.x-1 > _leftBorder.position.x)
+            {
+                return false;
+            }
             return true;
         }
 
